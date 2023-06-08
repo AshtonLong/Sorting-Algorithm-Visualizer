@@ -8,20 +8,31 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Sorting Algorithm Visualizer</title>
 </head>
+
 <body>
     <div id="controls">
+        <label for="volume">Volume:</label>
+        <input type="range" id="volume" value="50" min="0" max="100" oninput="changeVolume(this.value)">
         <button onclick="generateRandomArray()">Generate New Array</button>
+        <label for="speed">Delay (ms):</label>
+        <input type="number" id="speed" min="0" step="0.1" value="1" oninput="changeSpeed(this.value)">
         <label for="arraySize">Array Size: <span id="arraySizeDisplay">50</span></label>
-        <input type="range" id="arraySize" value="50" min="5" max="170" oninput="updateArraySizeDisplay(this.value)">
+        <input type="range" id="arraySize" value="50" min="5" max="800" oninput="updateArraySizeDisplay(this.value)">
         <select id="algorithm" onchange="updateAlgorithmInfo()">
             <option value="bubbleSort">Bubble Sort</option>
             <option value="selectionSort">Selection Sort</option>
             <option value="insertionSort">Insertion Sort</option>
             <option value="quickSort">Quick Sort</option>
+            <option value="bogosort">Bogosort</option>
+            <option value="heapSort">Heap Sort</option>
+            <option value="treeSort">Tree Sort</option>
+            <option value="mergeSort">Merge Sort</option>
+            <option value="shellSort">Shell Sort</option>
+            <option value="cocktailSort">Cocktail Sort</option>
         </select>
         <button onclick="sort()">Sort</button>
         <label class="switch">
-            <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()">
+            <input type="checkbox" id="darkModeToggle" onclick="toggleDarkMode()" checked>
             <span class="slider round"></span>
         </label>
         Dark Mode
@@ -30,5 +41,10 @@
     <div id="arrayContainer"></div>
     <script src="js/sortingAlgorithms.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/utilities.js"></script>
+    <script>
+        document.body.classList.add('dark-mode');
+    </script>
 </body>
+
 </html>

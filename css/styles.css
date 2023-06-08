@@ -13,10 +13,18 @@ body {
     margin-bottom: 20px;
 }
 
+#arrayContainer {
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 .bar {
     display: inline-block;
     background-color: skyblue;
     margin: 0 1px;
+    height: 100px;
 }
 
 .switch {

@@ -3,7 +3,17 @@ const arraySizeInput = document.getElementById('arraySize');
 const algorithmSelect = document.getElementById('algorithm');
 const algorithmInfo = document.getElementById('algorithmInfo');
 let array = [];
-const delay = 1;
+let delay = 1;
+
+let volume = 0.5;
+
+function changeVolume(value) {
+    volume = value / 100;
+}
+
+function changeSpeed(value) {
+    delay = value;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     generateRandomArray();
@@ -35,6 +45,24 @@ function updateAlgorithmInfo() {
         case 'quickSort':
             info = 'Quick Sort: An efficient, in-place sorting algorithm, with an average-case time complexity of O(n log n). It works by selecting a "pivot" element and partitioning the array around the pivot.';
             break;
+        case 'bogosort':
+            info = 'Bogosort: A highly inefficient sorting algorithm that randomly permutes the elements until they are sorted. Time complexity: O((n+1)!).';
+            break;
+        case 'heapSort':
+            info = 'Heap Sort: An efficient comparison-based sorting algorithm. It works by building a max heap and then repeatedly extracting the maximum element and moving it to the end of the array. Time complexity: O(n log n).';
+            break;
+        case 'treeSort':
+            info = 'Tree Sort: This algorithm builds a binary search tree from the elements in the array, and then traverses the tree in-order to produce a sorted sequence. Time complexity: Average case O(n log n), worst case O(n²).';
+            break;
+        case 'mergeSort':
+            info = 'Merge Sort: An efficient, divide and conquer algorithm that divides the array into halves, sorts them, and merges them. Time complexity: O(n log n).';
+            break;
+        case 'shellSort':
+            info = 'Shell Sort: A generalization of insertion sort that sorts elements that are far apart. Time complexity: Between O(n) and O(n²).';
+            break;
+        case 'cocktailSort':
+            info = 'Cocktail Sort: A variation of Bubble Sort. It sorts the array in both directions each pass through the list. Time complexity: O(n²).';
+            break;
     }
     algorithmInfo.innerText = info;
 }
@@ -47,20 +75,20 @@ function generateRandomArray() {
 
 function render(array) {
     arrayContainer.innerHTML = '';
-    const viewportWidth = window.innerWidth * 0.9;
     const maxBarHeight = 300;
-    const barWidth = Math.max(viewportWidth / array.length - 1, 2);
+    const containerWidth = arrayContainer.offsetWidth;
+    const maxWidthPerBar = containerWidth / array.length - 2;
+
     array.forEach(value => {
         const bar = document.createElement('div');
         bar.classList.add('bar');
-        bar.style.width = `${barWidth}px`;
+        bar.style.width = `${maxWidthPerBar}px`;
         bar.style.height = `${(value / Math.max(...array)) * maxBarHeight}px`;
         arrayContainer.appendChild(bar);
     });
 }
 
 async function sort() {
-    
     const algorithm = algorithmSelect.value;
     switch (algorithm) {
         case 'bubbleSort':
@@ -75,9 +103,29 @@ async function sort() {
         case 'quickSort':
             await quickSort(array, 0, array.length - 1, render, delay);
             break;
+        case 'bogosort':
+            await bogosort(array, render, delay);
+            break;
+        case 'heapSort':
+            await heapSort(array, render, delay);
+            break;
+        case 'treeSort':
+            await treeSort(array, render, delay);
+            break;
+        case 'mergeSort':
+            await mergeSort(array, 0, array.length - 1, render, delay);
+            break;
+        case 'shellSort':
+            await shellSort(array, render, delay);
+            break;
+        case 'cocktailSort':
+            await cocktailSort(array, render, delay);
+            break;
     }
 }
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+window.addEventListener("resize", () => render(array));
